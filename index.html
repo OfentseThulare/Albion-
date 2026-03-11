@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albion Group Industries</title>
+    <meta name="description" content="Food Systems Innovation for Africa and Beyond. Engineering resilient food systems.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #071a0e;
+            --bg-secondary: #0d2818;
+            --bg-dark-card: #1a3d2b;
+            --accent-green: #2d6a4f;
+            --accent-sage: #52b788;
+            --accent-pale: #95d5b2;
+            --white: #ffffff;
+            --off-white: #f4f1eb;
+            --off-white-alt: #eae9e2;
+            --text-dark: #111111;
+            --border-faint: rgba(255, 255, 255, 0.10);
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-ui: 'Syne', sans-serif;
+            
+            --nav-height: 80px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--white);
+            font-family: var(--font-ui);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* SVG Noise Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, .heading {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        .label {
+            font-family: var(--font-ui);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.68rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .label::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background-color: currentColor;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-sage);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-sage);
+            color: var(--bg-primary);
+        }
+        .btn-accent:hover {
+            background-color: var(--white);
+        }
+
+        .btn-ghost {
+            background-color: transparent;
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .btn-ghost:hover {
+            border-color: var(--accent-sage);
+            color: var(--accent-sage);
+        }
+        
+        .btn-ghost:active {
+            transform: scale(0.98);
+        }
+
+        .link-arrow {
+            color: var(--accent-sage);
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+        .link-arrow:hover {
+            gap: 0.8rem;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
+        
+        .placeholder-box {
+            background-color: rgba(255, 255, 255, 0.05);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+        }
+        .placeholder-box.dark {
+            background-color: rgba(17, 17, 17, 0.05);
+            border-color: rgba(17, 17, 17, 0.2);
+            color: rgba(17, 17, 17, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            z-index: 100;
+            transition: all 0.4s ease;
+            background-color: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .navbar.scrolled {
+            background-color: rgba(7, 26, 14, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-faint);
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 4rem;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            width: 160px;
+            height: 48px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            font-family: var(--font-ui);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-sage);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background-color: var(--bg-primary);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .mobile-menu a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-family: var(--font-display);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .hero-bg-dots {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(var(--border-faint) 1px, transparent 1px);
+            background-size: 32px 32px;
+            z-index: 1;
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 50%, transparent 20%, var(--bg-primary) 100%);
+            z-index: 2;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 3;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 100%;
+        }
+
+        .hero-content {
+            padding-left: 4.5rem;
+            padding-right: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-eyebrow {
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .hero h1 em {
+            color: var(--accent-pale);
+            font-style: italic;
+        }
+
+        .hero-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 520px;
+            margin-bottom: 3rem;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .scroll-cue {
+            position: absolute;
+            bottom: 3rem;
+            left: 4.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: var(--accent-sage);
+            animation: scrollLine 2s infinite ease-in-out;
+        }
+        
+        @keyframes scrollLine {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(200%); }
+        }
+
+        .scroll-cue span {
+            font-family: var(--font-ui);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-image-col {
+            height: 100vh;
+        }
+
+        /* Mission Strip */
+        .mission-strip {
+            background-color: var(--accent-green);
+            padding: 3.5rem 4rem;
+            text-align: center;
+        }
+
+        .mission-quote {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1.3rem, 2.5vw, 1.85rem);
+            max-width: 860px;
+            margin: 0 auto 2.5rem auto;
+            color: var(--white);
+            line-height: 1.4;
+        }
+
+        .mission-stats {
+            display: flex;
+            justify-content: center;
+            gap: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: var(--font-ui);
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Solutions Grid */
+        .solutions {
+            background-color: var(--bg-primary);
+            padding: 8rem 4rem;
+        }
+        
+        .solutions-header {
+            margin-bottom: 5rem;
+        }
+        
+        .solutions-header .label {
+            margin-bottom: 2rem;
+        }
+        
+        .solutions-header h2 {
+            font-size: clamp(2.2rem, 4vw, 3.8rem);
+            max-width: 600px;
+        }
+        
+        .solutions-header h2 em {
+            color: var(--accent-pale);
+            font-style: italic;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5px;
+            background-color: var(--border-faint);
+            border: 1.5px solid var(--border-faint);
+        }
+
+        .solution-card {
+            background-color: var(--bg-secondary);
+            padding: 4rem;
+            position: relative;
+            transition: background-color 0.4s ease;
+        }
+
+        .solution-card:hover {
+            background-color: var(--bg-dark-card);
+        }
+
+        .card-accent-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-sage);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .solution-card:hover .card-accent-line {
+            transform: scaleX(1);
+        }
+
+        .solution-icon {
+            margin-bottom: 2.5rem;
+            color: var(--accent-sage);
+        }
+
+        .solution-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .solution-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .solution-section-title {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-sage);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .solution-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .solution-link {
+            margin-top: 2.5rem;
+            display: inline-block;
+        }
+
+        /* Deep Dive Sections (Alternating) */
+        .deep-dive-container {
+            overflow: hidden;
+        }
+        
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-color: var(--off-white);
+            color: var(--text-dark);
+        }
+        
+        .feature-row:nth-child(even) {
+            background-color: var(--off-white-alt);
+        }
+        
+        .feature-row:nth-child(even) .feature-image-col {
+            order: 2;
+        }
+        .feature-row:nth-child(even) .feature-content-col {
+            order: 1;
+        }
+
+        .deep-dive-intro {
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            padding: 8rem 4rem 4rem 4rem;
+            text-align: center;
+        }
+        
+        .deep-dive-intro .label {
+            color: rgba(17, 17, 17, 0.6);
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .deep-dive-intro h2 {
+            font-size: clamp(2.4rem, 4vw, 3.8rem);
+        }
+        
+        .deep-dive-intro h2 em {
+            color: var(--accent-green);
+            font-style: italic;
+        }
+
+        .feature-content-col {
+            padding: 6rem 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .pill-badge {
+            display: inline-flex;
+            font-family: var(--font-ui);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(17, 17, 17, 0.2);
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            align-self: flex-start;
+        }
+
+        .feature-content-col h3 {
+            font-size: clamp(2rem, 3vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .feature-content-col > p {
+            font-size: 1.05rem;
+            color: rgba(17, 17, 17, 0.75);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-benefits {
+            margin: 2rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .feature-benefits li {
+            font-family: var(--font-ui);
+            font-size: 0.95rem;
+            color: rgba(17, 17, 17, 0.85);
+            margin-bottom: 0.75rem;
+            position: relative;
+            list-style: none;
+        }
+        
+        .feature-benefits li::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.5rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--accent-green);
+        }
+
+
+        .feature-quote {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.4rem;
+            color: var(--accent-green);
+            border-left: 2px solid var(--accent-green);
+            padding-left: 1.5rem;
+            margin: 2rem 0 3rem 0;
+        }
+        
+        .feature-image-col {
+            min-height: 600px;
+        }
+
+        /* Why AGI Section */
+        .why-agi {
+            background-color: var(--bg-secondary);
+            padding: 8rem 4rem;
+        }
+
+        .why-agi-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        
+        .why-agi-header .label {
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .why-agi-header h2 {
+            font-size: clamp(2.4rem, 4vw, 3.8rem);
+        }
+        
+        .why-agi-header h2 em {
+            color: var(--accent-pale);
+            font-style: italic;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .why-col {
+            background-color: var(--bg-secondary);
+            padding: 4rem 3rem;
+        }
+
+        .why-icon {
+            color: var(--accent-sage);
+            margin-bottom: 2rem;
+        }
+
+        .why-col h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .why-col p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Partnership CTA Section */
+        .partnership-cta {
+            background-color: var(--bg-primary);
+            position: relative;
+            padding: 10rem 4rem;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .partnership-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(82,183,136,0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .partnership-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .partnership-content h2 {
+            font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .partnership-sub {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.65);
+            max-width: 540px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .partnership-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #040f08;
+            padding: 4rem 4rem 2rem 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-tagline {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 1.5rem;
+            max-width: 300px;
+        }
+
+        .footer-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .footer-nav a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .footer-nav a:hover {
+            color: var(--white);
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-contact a, .footer-contact p {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            margin: 0;
+            font-family: var(--font-ui);
+        }
+
+        .footer-contact a:hover {
+            color: var(--white);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .footer-bottom p, .footer-bottom a {
+            font-size: 0.68rem;
+            color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            font-family: var(--font-ui);
+        }
+        
+        .footer-bottom a:hover {
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero-content {
+                padding-left: 2rem;
+            }
+            .why-col {
+                padding: 3rem 2rem;
+            }
+            .feature-content-col[style] {
+                padding-left: 4rem !important;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                padding: 8rem 2rem 4rem 2rem;
+                min-height: auto;
+            }
+            .hero-image-col {
+                height: 60vh;
+            }
+            .scroll-cue {
+                display: none;
+            }
+            .feature-row {
+                grid-template-columns: 1fr;
+            }
+            .feature-row:nth-child(even) .feature-image-col {
+                order: 1;
+            }
+            .feature-row:nth-child(even) .feature-content-col {
+                order: 2;
+            }
+            .feature-image-col {
+                min-height: 400px;
+            }
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .container {
+                padding: 0 2rem;
+            }
+            .solutions {
+                padding: 5rem 2rem;
+            }
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+            .solution-card {
+                padding: 3rem 2rem;
+            }
+            .mission-strip {
+                padding: 3.5rem 2rem;
+            }
+            .mission-stats {
+                gap: 2.5rem;
+                flex-direction: column;
+            }
+            .deep-dive-intro {
+                padding: 5rem 2rem 3rem 2rem;
+            }
+            .feature-content-col {
+                padding: 4rem 2rem;
+                padding-left: 2rem !important;
+            }
+            .why-agi {
+                padding: 5rem 2rem;
+            }
+            .partnership-cta {
+                padding: 6rem 2rem;
+            }
+            .footer {
+                padding: 4rem 2rem 2rem 2rem;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Noise Overlay -->
+    <svg class="noise-overlay">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+    </svg>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <!-- LOGO PLACEHOLDER -->
+                <div class="placeholder-box">LOGO PLACEHOLDER</div>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#solutions">Solutions</a>
+                <a href="#how-it-works">Technology</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="nav-cta">
+                <a href="#contact" class="btn btn-primary">Partner With Us</a>
+            </div>
+            
+            <button class="mobile-menu-btn" aria-label="Toggle Menu" id="mobile-menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+    </nav>
+    
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#solutions" class="mobile-link">Solutions</a>
+        <a href="#how-it-works" class="mobile-link">Technology</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+        <a href="#contact" class="btn btn-primary" style="margin-top: 1rem;">Partner With Us</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-dots"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <div class="label hero-eyebrow fade-up" style="animation-delay: 0.2s;">Food Systems Innovation for Africa and Beyond</div>
+                <h1 class="fade-up" style="animation-delay: 0.4s;">
+                    Solving Food Security<br>
+                    <em>at the Root.</em>
+                </h1>
+                <p class="hero-sub fade-up" style="animation-delay: 0.6s;">
+                    Albion Group Industries engineers resilient food systems, from heat-stable proteins to blockchain traceability, built for the realities of our climate, our continent, and our future.
+                </p>
+                <div class="hero-ctas fade-up" style="animation-delay: 0.8s;">
+                    <a href="#solutions" class="btn btn-accent">Explore Our Solutions</a>
+                    <a href="#contact" class="btn btn-ghost">Request a Partnership Brief</a>
+                </div>
+                
+                <div class="scroll-cue fade-up" style="animation-delay: 1.2s;">
+                    <div class="scroll-line"></div>
+                    <span>SCROLL</span>
+                </div>
+            </div>
+            <div class="hero-image-col">
+                <!-- HERO IMAGE: replace src with supplied asset -->
+                <div class="placeholder-box" style="font-size: 1.2rem; color: rgba(255,255,255,0.3);">
+                    [HERO IMAGE PLACEHOLDER]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Strip -->
+    <section class="mission-strip reveal">
+        <p class="mission-quote">
+            "Our mission is to make nutritious, traceable, and climate-resilient food accessible to everyone, regardless of geography or infrastructure."
+        </p>
+        <div class="mission-stats">
+            <div class="stat-item">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Innovation Pillars</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">Pan-African</span>
+                <span class="stat-label">Reach</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">End-to-End</span>
+                <span class="stat-label">Supply Chain Integration</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Grid -->
+    <section id="solutions" class="solutions">
+        <div class="container">
+            <div class="solutions-header reveal">
+                <div class="label">Our Solutions</div>
+                <h2>Four Pillars of a <em>Resilient</em> Food Future</h2>
+            </div>
+            
+            <div class="solutions-grid">
+                <!-- Card 01 -->
+                <div class="solution-card reveal">
+                    <div class="card-accent-line"></div>
+                    <div class="solution-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="18" r="3"></circle>
+                            <circle cx="6" cy="6" r="3"></circle>
+                            <circle cx="18" cy="6" r="3"></circle>
+                            <path d="M8.5 8.5l7 7"></path>
+                            <path d="M21 9v6"></path>
+                            <path d="M9 21H3"></path>
+                        </svg>
+                    </div>
+                    <h3>Heat Stable Proteins</h3>
+                    <div class="solution-section">
+                        <div class="solution-section-title">The Problem</div>
+                        <p>Traditional proteins spoil easily, require cold storage, and lose quality during transport. This drives high food waste, inflated logistics costs, and restricted access across hot climates.</p>
+                    </div>
+                    <div class="solution-section">
+                        <div class="solution-section-title">Our Approach</div>
+                        <p>AGI develops heat stable, shelf-resilient proteins engineered to remain safe and nutritious without refrigeration, cutting spoilage, reducing logistics dependency, and opening new markets across Africa.</p>
+                    </div>
+                    <a href="#how-it-works" class="link-arrow solution-link">Learn More &rarr;</a>
+                </div>
+                
+                <!-- Card 02 -->
+                <div class="solution-card reveal">
+                    <div class="card-accent-line"></div>
+                    <div class="solution-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2C8 2 4 5.333 4 10c0 4.667 8 12 8 12s8-7.333 8-12c0-4.667-4-8-8-8z"></path>
+                            <circle cx="12" cy="10" r="2"></circle>
+                            <path d="M16 11c1-1 3-1 3-1"></path>
+                            <path d="M8 11C7 10 5 10 5 10"></path>
+                        </svg>
+                    </div>
+                    <h3>Revolutionising Fish Farming</h3>
+                    <div class="solution-section">
+                        <div class="solution-section-title">The Problem</div>
+                        <p>Africa faces rapidly declining fish stocks, increasingly contaminated water sources, and outdated aquaculture systems that yield too little to meet growing demand.</p>
+                    </div>
+                    <div class="solution-section">
+                        <div class="solution-section-title">Our Approach</div>
+                        <p>AGI builds Recirculating Aquaculture Systems (RAS) that produce clean, high-yield fish in controlled environments, independent of climate, geography, or open water access.</p>
+                    </div>
+                    <a href="#how-it-works" class="link-arrow solution-link">Learn More &rarr;</a>
+                </div>
+                
+                <!-- Card 03 -->
+                <div class="solution-card reveal">
+                    <div class="card-accent-line"></div>
+                    <div class="solution-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                            <line x1="2" y1="10" x2="22" y2="10"></line>
+                            <line x1="7" y1="15" x2="7.01" y2="15"></line>
+                            <line x1="11" y1="15" x2="17" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h3>Food Traceability Technology</h3>
+                    <div class="solution-section">
+                        <div class="solution-section-title">The Problem</div>
+                        <p>Consumers and regulators have no reliable way to verify food origin. This creates conditions for fraud, contamination, unsafe supply chains, and eroded consumer trust.</p>
+                    </div>
+                    <div class="solution-section">
+                        <div class="solution-section-title">Our Approach</div>
+                        <p>AGI deploys blockchain traceability infrastructure that logs every stage of a product's journey, verifying origin, preventing counterfeits, and giving buyers, retailers, and regulators full end-to-end transparency.</p>
+                    </div>
+                    <a href="#how-it-works" class="link-arrow solution-link">Learn More &rarr;</a>
+                </div>
+                
+                <!-- Card 04 -->
+                <div class="solution-card reveal">
+                    <div class="card-accent-line"></div>
+                    <div class="solution-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22v-7l-2-2"></path>
+                            <path d="M12 15l2-2"></path>
+                            <path d="M12 22C6 22 2 17 2 11c0-4 4-8 10-9 6 1 10 5 10 9 0 6-4 11-10 11z"></path>
+                        </svg>
+                    </div>
+                    <h3>Climate-Resilient Unconventional Crops</h3>
+                    <div class="solution-section">
+                        <div class="solution-section-title">The Problem</div>
+                        <p>Climate change is systematically destroying traditional crop yields across Africa, threatening food security for millions and decimating smallholder farmer income.</p>
+                    </div>
+                    <div class="solution-section">
+                        <div class="solution-section-title">Our Approach</div>
+                        <p>AGI identifies and scales unconventional crops including mung beans, sorghum, seaweed, and pistachio alternatives that are engineered by nature to thrive in harsh, dry, and unpredictable environments.</p>
+                    </div>
+                    <a href="#how-it-works" class="link-arrow solution-link">Learn More &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deep Dive Alternating Rows -->
+    <section id="how-it-works" class="deep-dive-container">
+        <div class="deep-dive-intro reveal">
+            <div class="label">How It Works</div>
+            <h2>From Problem <em>to Production</em></h2>
+        </div>
+        
+        <!-- Row 1 -->
+        <div class="feature-row reveal">
+            <div class="feature-image-col">
+                <!-- FEATURE IMAGE 1: Heat Stable Proteins — supply high-res product or lab image -->
+                <div class="placeholder-box dark">
+                    [FEATURE IMAGE 1: Heat Stable Proteins]
+                </div>
+            </div>
+            <div class="feature-content-col">
+                <div class="pill-badge">Pillar 01 — Proteins</div>
+                <h3>Shelf-Resilient Nutrition at Scale</h3>
+                <p>Conventional protein supply chains are built around refrigeration. In Africa, that assumption fails. Power outages, long distances, and infrastructure gaps mean that cold chains routinely break down, and the food that depends on them goes with them.</p>
+                <p>AGI engineers proteins at a molecular level to remain stable at ambient and elevated temperatures, enabling safe distribution across regions where cold infrastructure is absent or unreliable.</p>
+                
+                <ul class="feature-benefits">
+                    <li>Eliminates refrigeration dependency across the last mile</li>
+                    <li>Reduces food waste by up to 60% in high-heat distribution environments</li>
+                    <li>Opens protein access to rural and remote communities</li>
+                    <li>Lowers logistics costs for distributors and retailers</li>
+                </ul>
+                
+                <p class="feature-quote">"Nutrition should not depend on an unbroken power supply."</p>
+                
+                <div>
+                    <a href="#contact" class="btn btn-primary" style="color: var(--white); background-color: var(--accent-green);">Request a Technical Brief</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="feature-row reveal">
+            <div class="feature-content-col" style="padding-left: 10vw;">
+                <div class="pill-badge">Pillar 02 — Aquaculture</div>
+                <h3>Clean Fish. Every Cycle. Anywhere.</h3>
+                <p>Open-water fish farming is at the mercy of weather, pollution, and ecological decline. African fish stocks are under sustained pressure from overfishing and environmental degradation, and traditional pond systems cannot fill the gap.</p>
+                <p>AGI's RAS facilities recirculate and filter water in closed-loop systems, producing premium fish with consistent quality, no seasonal dependency, and zero reliance on healthy open-water ecosystems.</p>
+                
+                <ul class="feature-benefits">
+                    <li>Produces year-round yields independent of climate and season</li>
+                    <li>Eliminates exposure to contaminated open water</li>
+                    <li>Reduces water usage by up to 95% compared to traditional pond systems</li>
+                    <li>Deployable in urban, peri-urban, and remote locations</li>
+                </ul>
+                
+                <p class="feature-quote">"A closed system is an honest system — what goes in is what comes out."</p>
+                
+                <div>
+                    <a href="#contact" class="btn btn-primary" style="color: var(--white); background-color: var(--accent-green);">Explore RAS Solutions</a>
+                </div>
+            </div>
+            <div class="feature-image-col">
+                <!-- FEATURE IMAGE 2: RAS / Fish Farming — supply facility or tank image -->
+                <div class="placeholder-box dark">
+                    [FEATURE IMAGE 2: RAS / Fish Farming]
+                </div>
+            </div>
+        </div>
+        
+        <!-- Row 3 -->
+        <div class="feature-row reveal">
+            <div class="feature-image-col">
+                <!-- FEATURE IMAGE 3: Traceability / Technology — supply dashboard, device, or supply chain visual -->
+                <div class="placeholder-box dark">
+                    [FEATURE IMAGE 3: Traceability / Technology]
+                </div>
+            </div>
+            <div class="feature-content-col">
+                <div class="pill-badge">Pillar 03 — Technology</div>
+                <h3>Every Step. Verified. Immutable.</h3>
+                <p>Food fraud costs the global economy billions annually. Mislabelled origin, tampered certifications, and contaminated batches reach consumers because no verifiable record exists to challenge them.</p>
+                <p>AGI's blockchain traceability platform creates an immutable log at every stage of the supply chain, from farm to shelf. Every transfer, every handler, every test result is recorded and visible to authorised parties in real time.</p>
+                
+                <ul class="feature-benefits">
+                    <li>Instant verification of origin and handling history</li>
+                    <li>Automated alerts for deviation from safety or quality standards</li>
+                    <li>Counterfeit prevention across retail and export channels</li>
+                    <li>Full regulatory compliance documentation on demand</li>
+                </ul>
+                
+                <p class="feature-quote">"Transparency is not optional. It is the product."</p>
+                
+                <div>
+                    <a href="#contact" class="btn btn-primary" style="color: var(--white); background-color: var(--accent-green);">Request a Platform Demo</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Row 4 -->
+        <div class="feature-row reveal">
+            <div class="feature-content-col" style="padding-left: 10vw;">
+                <div class="pill-badge">Pillar 04 — Agronomy</div>
+                <h3>Crops Built for the World We Live In</h3>
+                <p>The crops that fed the last century were bred for a stable climate. That climate no longer exists across most of Africa. Maize, wheat, and traditional legumes are failing in regions where rainfall is unpredictable and temperatures are rising year on year.</p>
+                <p>AGI identifies, trials and scales crops that thrive precisely where conventional agriculture fails. Mung beans, sorghum, drought-tolerant seaweed varieties, and pistachio alternatives are among a growing portfolio of resilient species now being brought to commercial scale.</p>
+                
+                <ul class="feature-benefits">
+                    <li>Viable in low-rainfall, high-temperature, and degraded soil conditions</li>
+                    <li>Higher caloric and nutritional density per hectare than many conventional crops</li>
+                    <li>Shorter growth cycles reducing exposure to weather volatility</li>
+                    <li>Strong export market demand in health and functional food sectors</li>
+                </ul>
+                
+                <p class="feature-quote">"The most resilient crop is the one nobody planted yet."</p>
+                
+                <div>
+                    <a href="#contact" class="btn btn-primary" style="color: var(--white); background-color: var(--accent-green);">View Our Crop Portfolio</a>
+                </div>
+            </div>
+            <div class="feature-image-col">
+                <!-- FEATURE IMAGE 4: Crops / Agriculture — supply field, crop close-up, or farmer image -->
+                <div class="placeholder-box dark">
+                    [FEATURE IMAGE 4: Crops / Agriculture]
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why AGI -->
+    <section id="about" class="why-agi">
+        <div class="container">
+            <div class="why-agi-header reveal">
+                <div class="label">Why Albion Group Industries</div>
+                <h2>Built for Africa. <em>Designed for Scale.</em></h2>
+            </div>
+            
+            <div class="why-grid reveal">
+                <div class="why-col">
+                    <div class="why-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                    </div>
+                    <h3>End-to-End Integration</h3>
+                    <p>From the seed in the ground to the product on the shelf, AGI controls and connects every stage. We do not sell isolated solutions. We build complete systems that eliminate the gaps where value is lost.</p>
+                </div>
+                
+                <div class="why-col">
+                    <div class="why-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="19.36" x2="19.78" y2="20.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </div>
+                    <h3>Climate-First Engineering</h3>
+                    <p>Every AGI solution is stress-tested against the real conditions of African and emerging-market environments: high heat, erratic rainfall, limited infrastructure, and constrained cold chain access. If it does not work in the field, it does not leave the lab.</p>
+                </div>
+                
+                <div class="why-col">
+                    <div class="why-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M12 8v4"></path>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                    </div>
+                    <h3>Transparent by Design</h3>
+                    <p>Blockchain traceability and open data architecture mean that every stakeholder, from smallholder farmer to institutional buyer, has visibility into the supply chain. Trust is not assumed. It is built in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership CTA -->
+    <section id="contact" class="partnership-cta">
+        <div class="partnership-glow"></div>
+        <div class="partnership-content reveal">
+            <h2>Ready to build the future of African food systems?</h2>
+            <p class="partnership-sub">AGI is actively seeking investment partners, institutional buyers, and distribution collaborators across Africa and global emerging markets. We are building for the long term and we are looking for partners who are too.</p>
+            <div class="partnership-actions">
+                <a href="#contact" class="btn btn-primary">Request a Partnership Brief</a>
+                <a href="mailto:info@albiongroup.com" class="btn btn-ghost">Contact the AGI Team</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <!-- LOGO PLACEHOLDER -->
+                <div class="placeholder-box" style="width: 160px; height: 48px;">LOGO PLACEHOLDER</div>
+                <p class="footer-tagline">Engineering resilience into the food systems of tomorrow.</p>
+            </div>
+            
+            <div class="footer-nav">
+                <a href="#solutions">Solutions</a>
+                <a href="#how-it-works">Technology</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="footer-contact">
+                <a href="mailto:info@albiongroup.com">[EMAIL PLACEHOLDER]</a>
+                <p>[ADDRESS PLACEHOLDER]</p>
+                <div class="social-links">
+                    <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                    <a href="#" aria-label="X (Twitter)">X</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Albion Group Industries. All rights reserved.</p>
+            <a href="#">Privacy Policy</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+                if (mobileMenu.classList.contains('active')) {
+                    menuBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>';
+                } else {
+                    menuBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+                }
+            });
+            
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    menuBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>';
+                });
+            });
+
+            // Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Intersection Observer for scroll-reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
