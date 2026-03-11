@@ -357,18 +357,20 @@
 
         .scroll-cue {
             position: absolute;
-            bottom: 3rem;
-            left: 4.5rem;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            z-index: 10;
         }
 
         .scroll-line {
             width: 1px;
-            height: 48px;
-            background-color: rgba(255, 255, 255, 0.3);
+            height: 56px;
+            background-color: rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
         }
@@ -381,7 +383,7 @@
             width: 100%;
             height: 50%;
             background-color: var(--accent-sage);
-            animation: scrollLine 2s infinite ease-in-out;
+            animation: scrollLine 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
         }
         
         @keyframes scrollLine {
@@ -391,8 +393,9 @@
 
         .scroll-cue span {
             font-family: var(--font-ui);
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            margin-right: -0.25em; /* Ensures perfect optical centering */
             color: rgba(255, 255, 255, 0.5);
         }
 
@@ -1011,15 +1014,16 @@
                     <a href="#contact" class="btn btn-ghost">Request a Partnership Brief</a>
                 </div>
                 
-                <div class="scroll-cue fade-up" style="animation-delay: 1.2s;">
-                    <div class="scroll-line"></div>
-                    <span>SCROLL</span>
-                </div>
             </div>
             <div class="hero-image-col">
                 <!-- HERO IMAGE: replace src with supplied asset -->
                 <img src="./assets/images/hero.png" alt="Precision agriculture and climate resilient crops" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
+        </div>
+        
+        <div class="scroll-cue fade-up" style="animation-delay: 1.2s;">
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
         </div>
     </section>
 
